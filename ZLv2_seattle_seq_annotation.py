@@ -1,4 +1,4 @@
-# original code is available at:https://git.lumc.nl/lgtc-bioinformatics/gapss3/blob/87013b63d956b3a12f1a8cd86df736e42622265a/src/seattle_seq_annotation.py
+# original code is available at: https://git.lumc.nl/lgtc-bioinformatics/gapss3/blob/87013b63d956b3a12f1a8cd86df736e42622265a/src/seattle_seq_annotation.py
 # I (Zhengdeng Lei) added the "try and except" part to deal with network problem when calling "response = urllib2.urlopen(request, timeout=180)"
 
 #!/usr/bin/env python
