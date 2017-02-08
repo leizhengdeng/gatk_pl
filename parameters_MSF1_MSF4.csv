@@ -1,0 +1,93 @@
+Module,Variable,Value (User input),Default Value,Comment
+#General parameters,,,,
+,platform,illumina,illumina,illumina or iontorrent or 454
+,input_data_dir,/crihome/zlei2/Feinstein.data,/cri/pinal/from_mnt/pinal/sgreen/genotype_11_samples/data/subsamples,"Required /crihome/zlei2/input_data
+"
+,input_fq1,Feinstein_MSF1_1_ATCACG_L003_R1_001.fastq;Feinstein_MSF4_CGATGT_L003_R1_001.fastq,ILM_002_Feinstein_MSF1_1_GTAGAG_L001_R1_001.fastq,Required (sanger format). Example: sample1_fq1;sample2_fq1;sample3_fq1
+,input_fq2,Feinstein_MSF1_1_ATCACG_L003_R2_001.fastq;Feinstein_MSF4_CGATGT_L003_R2_001.fastq,ILM_002_Feinstein_MSF1_1_GTAGAG_L001_R2_001.fastq,Required if paired end (sanger format). Example: sample1_fq2;sample2_fq2;sample3_fq2
+,sample_name,Feinstein_MSF1_1_ATCACG_L003_Exome;Feinstein_MSF4_CGATGT_L003_Exome,,Required. Example: sample1;sample2;sample3
+,output_project_dir,/crihome/zlei2/Feinstein_Two_Exomes,,Required
+,cluster_mode,1,1,cluster=1(qsub); single_node=0
+,pipeline_time_stamp,,,
+,email,,zlei2@uic.edu,
+,run_pipeline,,2,qc only = 1; full pipeline = 2
+,gatk_full_version,,1,full version = 1; lite version = 0
+,pe,,1,paired end = 1; single end = 0
+,long_reads,,0,short reads = 0; long reads = 1 use bwasw option
+,reference_fa,,/cri/pinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta,
+,hapmap_vcf,,/crihome/zlei2/knownsites/hapmap_3.3.hg19.vcf,
+,KG_omni_vcf,,/crihome/zlei2/knownsites/1000G_omni2.5.hg19.vcf,
+,KG_snp_vcf,,/crihome/zlei2/knownsites/1000G_phase1.snps.high_confidence.hg19.vcf,
+,Mills_KG_indel_vcf,,/crihome/zlei2/knownsites/Mills_and_1000G_gold_standard.indels.hg19.vcf,
+,dbsnp_vcf,,"/crihome/zlei2/knownsites/dbsnp_137.hg19.vcf
+",
+,target_bed,,/crihome/zlei2/knownsites/sureselect/S04380219_Covered.ZL.bed,taget capture bed file; remove this if it is whole-genome sequencing
+,java_mem,,8g,
+,data_threads,,4,
+,cpu_threads,,4,
+,,,,
+#Directory,,,,
+,log_sub_dir,,log,Default full path: $base_dir/log
+,before_qc_report_sub_dir,,before_qc_report,QC report on INPUT fastq file
+,after_qc_report_sub_dir,,after_qc_report,
+,qc_fastq_data_sub_dir,,qc_fastq_data,
+,bam_sub_dir,,bam,Default full path: $base_dir/bam
+,realigned_bam_sub_dir,,realigned_bam,Default full path: $base_dir/realigned_bam
+,snp_sub_dir,,snp,Default full path: $base_dir/snp
+,gatk_dir,,/cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b,
+,picard_dir,,/cri/crigalaxy/galaxy-dist/tool-data/shared/jars/picard-tools-1.73,
+,trimmomatic_path,,/crihome/zlei2/tools/trimmomatic-0.30.jar,
+,qualimap_path,,/crihome/zlei2/tools/qualimap_v0.7.1/qualimap,
+,seattle_path,,/crihome/zlei2/tools/seattle_seq_annotation.py,
+,tmp_dir,,/tmp,
+,,,,
+#QC data,,,,
+,trim_or_filter,,0,trimmomatic=0;simple_trim=1;filter=2
+,trimmomatic_leading,,10,Cut bases off the start of a read if below a threshold quality
+,trimmomatic_trailing,,10,Cut bases off the end of a read if below a threshold quality
+,trimmomatic_slidingwindow,,4:20,if a window (size=4) with an average quality <20 it removes all bases in that window and beyond to end of the read
+,trimmomatic_minlen,,50,Drop the read if it is below a specified length
+,trim_start_pos,,1,
+,trim_end_pos,,130,
+,filter_quality_score,,30,iontorrent = 17; illumina=30
+,filter_percent,,80,Minimum percent of bases that must have filter_quality_score
+,fix_paired_reads,,/cri/mmaiensc/SCRIPTS/NGSStandard/fix_paired_reads.pl,
+,,,,
+#Alignment,,,,
+,aligner,,bwa,bwa or tmap
+,read_group_id,,,
+,,,,
+#GATK parameters,,,,
+#gatk  -T RealignerTargetCreator,,,,
+,user_interval_file,,,user provided interval file
+,known_indel_sites,,/crihome/zlei2/knownsites/1000G_phase1.indels.hg19.vcf,e.g. /path/to/indels.vcf
+,snp_caller,,1,UnifiedGenotyper = 1;  HaplotypeCaller =  2
+#gatk -T UnifiedGenotyper,,,,
+,stand_call_conf,,50,
+,stand_emit_conf,,30,
+,glm,,BOTH,
+,dcov,,200,50 for 4x; 200 for >30x WGS or Whole exome
+,mmq,,30,
+,mm40,,3,
+#gatk -T VariantRecalibrator,,,,
+,snp_model_para,, -percentBad 0.01 -minNumBad 1000,Use -maxGaussians 4 and/or -percentBad 0.05 if you have fewer variants
+,snp_model_annotation,, -an MQ -an DP -an FS -an ReadPosRankSum -an MQRankSum -an QD -an HaplotypeScore,Do not use DP with hybrid capture dataset
+,indel_model_para,, --maxGaussians 4 -percentBad 0.05 -minNumBad 1000,
+,indel_model_annotation,, -an MQ -an DP -an FS -an ReadPosRankSum -an MQRankSum -an QD,
+#gatk -T ApplyRecalibration,,,,
+,snp_filter_level ,,99.9,
+,indel_filter_level ,,99.9,
+#Select variant,VQSLOD_Threshold,,4,
+,,,,
+#makeIndelMask.py,,,,
+,num_bases,,10,The default number 10 stands for the number of bases that will be included on either side of the indel
+#gatk -T VariantFiltration,,,,
+,clusterSize,,3,
+,clusterWindowSize,,10,
+,filterExpression1,,DP <= 8,
+,filterName1,,DP8,
+,filterExpression2,,SB > -0.10,
+,filterName2,,StrandBias,
+,filterExpression3,,QD < 5.0,
+,filterName3,,QD5,
+#annotate variants  ,,,snpelf; annovar,

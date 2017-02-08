@@ -1,0 +1,82 @@
+2014/05/05 15:29:15	####################################PIPELINE STARTS####################################
+2014/05/05 15:29:27	START cp /crihome/zlei2/gatk_pipeline/Feinstein_MSF2.csv /crihome/zlei2/FeinStein_MSF2_WG/log/Feinstein_MSF2_20140505_152915.csv
+2014/05/05 15:29:30	SUCCESS after running 0 hours 0 minutes 3 seconds
+2014/05/05 15:29:31	####################################FASTQC AFTER QC STARTS####################################
+2014/05/05 15:29:31	PARALLEL START fastqc /crihome/zlei2/FeinStein_MSF2_WG/qc_fastq_data/ILM-019_FeinStein_CAGGCG_L001_R1_001.qc.fastq -t 4 -o /crihome/zlei2/FeinStein_MSF2_WG/after_qc_report
+2014/05/05 15:29:32	qsub job id = 8244.admin-ib.default.domain
+2014/05/05 15:29:34	PARALLEL START fastqc /crihome/zlei2/FeinStein_MSF2_WG/qc_fastq_data/ILM-019_FeinStein_CAGGCG_L001_R2_001.qc.fastq -t 4 -o /crihome/zlei2/FeinStein_MSF2_WG/after_qc_report
+2014/05/05 15:29:34	qsub job id = 8245.admin-ib.default.domain
+2014/05/05 16:30:40	FINISH after running 1 hours 1 minutes 9 seconds
+2014/05/05 16:30:50	####################################FASTQC AFTER QC ENDS####################################
+2014/05/05 16:30:50	####################################FASTQ QC SUMMARY STARTS####################################
+2014/05/05 16:30:51	####################################FASTQ QC SUMMARY ENDS####################################
+2014/05/05 16:30:53	####################################ALIGNEMENT STARTS####################################
+2014/05/05 16:30:54	PARALLEL START bwa aln -t 4 /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta /crihome/zlei2/FeinStein_MSF2_WG/qc_fastq_data/ILM-019_FeinStein_CAGGCG_L001_R1_001.qc.fastq > /crihome/zlei2/FeinStein_MSF2_WG/bam/ILM-019_FeinStein_CAGGCG_L001_R1_001.qc.fastq.sai
+2014/05/05 16:30:55	qsub job id = 8274.admin-ib.default.domain
+2014/05/05 16:30:56	PARALLEL START bwa aln -t 4 /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta /crihome/zlei2/FeinStein_MSF2_WG/qc_fastq_data/ILM-019_FeinStein_CAGGCG_L001_R2_001.qc.fastq > /crihome/zlei2/FeinStein_MSF2_WG/bam/ILM-019_FeinStein_CAGGCG_L001_R2_001.qc.fastq.sai
+2014/05/05 16:30:57	qsub job id = 8275.admin-ib.default.domain
+2014/05/06 11:54:12	FINISH after running 19 hours 23 minutes 18 seconds
+2014/05/06 11:54:12	START bwa sampe -r "@RG	ID:Feinstein_MSF2	LB:Feinstein_MSF2	SM:Feinstein_MSF2	PL:ILLUMINA" /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta /crihome/zlei2/FeinStein_MSF2_WG/bam/ILM-019_FeinStein_CAGGCG_L001_R1_001.qc.fastq.sai /crihome/zlei2/FeinStein_MSF2_WG/bam/ILM-019_FeinStein_CAGGCG_L001_R2_001.qc.fastq.sai /crihome/zlei2/FeinStein_MSF2_WG/qc_fastq_data/ILM-019_FeinStein_CAGGCG_L001_R1_001.qc.fastq /crihome/zlei2/FeinStein_MSF2_WG/qc_fastq_data/ILM-019_FeinStein_CAGGCG_L001_R2_001.qc.fastq > /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.sam
+2014/05/06 21:14:21	SUCCESS after running 9 hours 20 minutes 9 seconds
+2014/05/06 21:14:33	START java -Xmx8g -jar /cri/crigalaxy/galaxy-dist/tool-data/shared/jars/picard-tools-1.73/SortSam.jar SO=coordinate VALIDATION_STRINGENCY=SILENT CREATE_INDEX=true I=/crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.sam O=/crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam
+2014/05/07 00:33:25	SUCCESS after running 3 hours 18 minutes 52 seconds
+2014/05/07 00:33:34	START samtools flagstat /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam > /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam.stat
+2014/05/07 00:40:43	SUCCESS after running 0 hours 7 minutes 9 seconds
+2014/05/07 00:40:43	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/crigalaxy/galaxy-dist/tool-data/shared/jars/picard-tools-1.73/FixMateInformation.jar SO=coordinate VALIDATION_STRINGENCY=SILENT MAX_RECORDS_IN_RAM=2000000 CREATE_INDEX=true I=/crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam
+2014/05/07 04:37:56	SUCCESS after running 3 hours 57 minutes 13 seconds
+2014/05/07 04:37:56	START java -Xmx8g -jar /cri/crigalaxy/galaxy-dist/tool-data/shared/jars/picard-tools-1.73/BuildBamIndex.jar I=/crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam O=/crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bai VALIDATION_STRINGENCY=SILENT
+2014/05/07 04:48:18	SUCCESS after running 0 hours 10 minutes 22 seconds
+2014/05/07 04:48:18	DELETE the following files if they exist: /crihome/zlei2/FeinStein_MSF2_WG/bam/ILM-019_FeinStein_CAGGCG_L001_R1_001.qc.fastq.sai; /crihome/zlei2/FeinStein_MSF2_WG/bam/ILM-019_FeinStein_CAGGCG_L001_R2_001.qc.fastq.sai; /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.sam
+2014/05/07 04:48:19	OUTPUT of BAM file(s) (sorted, read group added, PCR duplicates removed (except iontorrent)) are in directory /crihome/zlei2/FeinStein_MSF2_WG/bam
+2014/05/07 04:48:19	####################################ALIGNEMENT ENDS####################################
+2014/05/07 04:48:19	####################################BAM FILE QC STARTS####################################
+2014/05/07 04:48:19	START /crihome/zlei2/tools/qualimap_v0.7.1/qualimap --java-mem-size=8G bamqc -bam /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam -outdir /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned
+2014/05/07 06:03:58	SUCCESS after running 1 hours 15 minutes 39 seconds
+2014/05/07 06:03:59	####################################BAM FILE QC ENDS####################################
+2014/05/07 06:04:00	####################################GATK REALIGNMENT STARTS####################################
+2014/05/07 06:04:00	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T RealignerTargetCreator -l INFO -nt 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta -known /crihome/zlei2/knownsites/Mills_and_1000G_gold_standard.indels.hg19.vcf -I /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam -o /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.intervals > /crihome/zlei2/FeinStein_MSF2_WG/log/Feinstein_MSF2.intervals.log
+2014/05/07 07:17:13	SUCCESS after running 1 hours 13 minutes 13 seconds
+2014/05/07 07:17:13	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T IndelRealigner -l INFO -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta -known /crihome/zlei2/knownsites/Mills_and_1000G_gold_standard.indels.hg19.vcf -I /crihome/zlei2/FeinStein_MSF2_WG/bam/Feinstein_MSF2.aligned.bam -targetIntervals /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.intervals -o /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.bam -stats /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.stats.txt > /crihome/zlei2/FeinStein_MSF2_WG/log/Feinstein_MSF2.realigned.log
+2014/05/07 10:07:53	SUCCESS after running 2 hours 50 minutes 40 seconds
+2014/05/07 10:07:56	START java -Xmx8g -jar /cri/crigalaxy/galaxy-dist/tool-data/shared/jars/picard-tools-1.73/SortSam.jar SO=coordinate VALIDATION_STRINGENCY=SILENT CREATE_INDEX=true I=/crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.bam O=/crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.sorted.bam
+2014/05/07 12:14:23	SUCCESS after running 2 hours 6 minutes 27 seconds
+2014/05/07 12:14:24	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/crigalaxy/galaxy-dist/tool-data/shared/jars/picard-tools-1.73/FixMateInformation.jar SO=coordinate VALIDATION_STRINGENCY=SILENT MAX_RECORDS_IN_RAM=2000000 CREATE_INDEX=true I=/crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.sorted.bam O=/crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.sorted.fixed.bam
+2014/05/07 16:21:46	SUCCESS after running 4 hours 7 minutes 22 seconds
+2014/05/07 16:21:47	START samtools flagstat /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.sorted.fixed.bam > /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.sorted.fixed.bam.stat
+2014/05/07 16:28:08	SUCCESS after running 0 hours 6 minutes 21 seconds
+2014/05/07 16:28:08	####################################GATK REALIGNMENT ENDS####################################
+2014/05/07 16:28:08	####################################BASE QUALITY SCORE RECALIBRATION STARTS####################################
+2014/05/07 16:28:09	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T BaseRecalibrator -l INFO -nct 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta -knownSites /crihome/zlei2/knownsites/dbsnp_137.hg19.vcf -I /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.sorted.fixed.bam -o /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.CovarTable_Recal.grp 
+2014/05/07 19:51:28	SUCCESS after running 3 hours 23 minutes 19 seconds
+2014/05/07 19:51:29	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T PrintReads -l INFO -nct 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta -I /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.sorted.fixed.bam -BQSR /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.CovarTable_Recal.grp -o /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.recal.bam
+2014/05/08 00:57:15	SUCCESS after running 5 hours 5 minutes 46 seconds
+2014/05/08 00:57:21	START samtools flagstat /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.recal.bam > /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.recal.bam.stat
+2014/05/08 01:11:57	SUCCESS after running 0 hours 14 minutes 36 seconds
+2014/05/08 01:11:57	####################################BASE QUALITY SCORE RECALIBRATION ENDS####################################
+2014/05/08 01:11:57	####################################REDUCING READS STARTS####################################
+2014/05/08 01:11:57	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T ReduceReads -l INFO -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta -I /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.realigned.recal.bam -o /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.reduced.bam
+2014/05/08 05:48:06	SUCCESS after running 4 hours 36 minutes 9 seconds
+2014/05/08 05:48:07	START samtools flagstat /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.reduced.bam > /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.reduced.bam.stat
+2014/05/08 05:51:59	SUCCESS after running 0 hours 3 minutes 52 seconds
+2014/05/08 05:51:59	####################################REDUCING READS ENDS####################################
+2014/05/08 05:51:59	####################################RAW SNP CALLING STARTS####################################
+2014/05/08 05:51:59	####################################call gatk####################################
+2014/05/08 05:51:59	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T UnifiedGenotyper -l INFO -nt 4 -nct 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta --dbsnp /crihome/zlei2/knownsites/dbsnp_137.hg19.vcf -stand_call_conf 50 -stand_emit_conf 30 -dcov 200 -glm BOTH -A HaplotypeScore -A Coverage -A FisherStrand -A ReadPosRankSumTest -A MappingQualityRankSumTest -A QualByDepth -A RMSMappingQuality -I /crihome/zlei2/FeinStein_MSF2_WG/realigned_bam/Feinstein_MSF2.reduced.bam -o /crihome/zlei2/FeinStein_MSF2_WG/snp/raw_snp_indel.vcf
+2014/05/08 08:23:50	SUCCESS after running 2 hours 31 minutes 51 seconds
+2014/05/08 08:23:50	####################################RAW SNP CALLING ENDS####################################
+2014/05/08 08:23:50	####################################VARIANT QUALITY RECALIBRATION STARTS####################################
+2014/05/08 08:23:50	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T VariantRecalibrator -l INFO -nt 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta --maxGaussians 4 -percentBad 0.01 -minNumBad 1000 -resource:hapmap,known=false,training=true,truth=true,prior=15.0 /crihome/zlei2/knownsites/hapmap_3.3.hg19.vcf -resource:omni,known=false,training=true,truth=false,prior=12.0 /crihome/zlei2/knownsites/1000G_omni2.5.hg19.vcf -resource:1000G,known=false,training=true,truth=false,prior=10.0 /crihome/zlei2/knownsites/1000G_phase1.snps.high_confidence.hg19.vcf -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /crihome/zlei2/knownsites/dbsnp_137.hg19.vcf -an MQ -an DP -an FS -an ReadPosRankSum -an MQRankSum -an QD -an HaplotypeScore -mode SNP -input /crihome/zlei2/FeinStein_MSF2_WG/snp/raw_snp_indel.vcf -recalFile /crihome/zlei2/FeinStein_MSF2_WG/snp/snp.output.recal -tranchesFile /crihome/zlei2/FeinStein_MSF2_WG/snp/snp.output.tranches -rscriptFile /crihome/zlei2/FeinStein_MSF2_WG/snp/snp.output.plots.R 
+2014/05/08 09:22:41	SUCCESS after running 0 hours 58 minutes 51 seconds
+2014/05/08 09:22:42	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T VariantRecalibrator -l INFO -nt 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta --maxGaussians 4 -percentBad 0.05 -minNumBad 1000 -resource:mills,known=false,training=true,truth=true,prior=12.0 /crihome/zlei2/knownsites/Mills_and_1000G_gold_standard.indels.hg19.vcf -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /crihome/zlei2/knownsites/dbsnp_137.hg19.vcf -an MQ -an DP -an FS -an ReadPosRankSum -an MQRankSum -an QD -mode INDEL -input /crihome/zlei2/FeinStein_MSF2_WG/snp/raw_snp_indel.vcf -recalFile /crihome/zlei2/FeinStein_MSF2_WG/snp/indel.output.recal -tranchesFile /crihome/zlei2/FeinStein_MSF2_WG/snp/indel.output.tranches -rscriptFile /crihome/zlei2/FeinStein_MSF2_WG/snp/indel.output.plots.R
+2014/05/08 09:52:03	SUCCESS after running 0 hours 29 minutes 21 seconds
+2014/05/08 09:52:03	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T ApplyRecalibration -l INFO -nt 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta --ts_filter_level 99.9 -mode SNP -recalFile /crihome/zlei2/FeinStein_MSF2_WG/snp/snp.output.recal -tranchesFile /crihome/zlei2/FeinStein_MSF2_WG/snp/snp.output.tranches -input /crihome/zlei2/FeinStein_MSF2_WG/snp/raw_snp_indel.vcf -o /crihome/zlei2/FeinStein_MSF2_WG/snp/recalibratedSNPs_rawIndels.vcf
+2014/05/08 09:59:49	SUCCESS after running 0 hours 7 minutes 46 seconds
+2014/05/08 09:59:50	START java -Xmx8g -Djava.io.tmpdir=/tmp/ -jar /cri/data1/rhel60/GenomeAnalysisTK-2.5-2-gf57256b/GenomeAnalysisTK.jar -T ApplyRecalibration -l INFO -nt 4 -R /cri/opinal/reference/hg19_ucsc_broad/gatk_resources/ucsc_bwa/ucsc.hg19.fasta --ts_filter_level 99.9 -mode INDEL -recalFile /crihome/zlei2/FeinStein_MSF2_WG/snp/indel.output.recal -tranchesFile /crihome/zlei2/FeinStein_MSF2_WG/snp/indel.output.tranches -input /crihome/zlei2/FeinStein_MSF2_WG/snp/recalibratedSNPs_rawIndels.vcf -o /crihome/zlei2/FeinStein_MSF2_WG/snp/RECALIBRATED.FILTERED.vcf
+2014/05/08 10:07:42	SUCCESS after running 0 hours 7 minutes 52 seconds
+2014/05/08 10:07:42	####################################VARIANT QUALITY RECALIBRATION ENDS####################################
+2014/05/08 10:07:42	####################################VARIANT SELECTION BY VQSLOD STARTS####################################
+2014/05/08 10:09:01	####################################VARIANT SELECTION BY VQSLOD ENDS####################################
+2014/05/08 10:09:01	####################################SEATTLE SEQ STARTS####################################
+2014/05/08 10:09:02	START /crihome/zlei2/tools/ZL_seattle_seq_annotation.py both /crihome/zlei2/FeinStein_MSF2_WG/snp/Feinstein_MSF2.VQSLOD4.vcf zlei2@uic.edu
+2014/05/09 06:21:43	SUCCESS after running 20 hours 12 minutes 41 seconds
+2014/05/09 06:21:43	####################################SEATTLE SEQ ENDS####################################
